@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MapperConsole
+namespace MapperConsole.Entities
 {
     public class Person
     {
