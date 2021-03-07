@@ -13,18 +13,30 @@ namespace MapperLibrary
         public TDestination Map(TSource mappedObject)
         {
             Type sourceType = typeof(TSource);
-            Dictionary<string, Type> sourceProperties = sourceType.GetProperties().ToDictionary(x => x.Name, y => y.PropertyType);
+            // Dictionary<string, Type> sourceProperties = sourceType.GetProperties().ToDictionary(x => x.Name, y => y.PropertyType);
 
             TDestination destination = new TDestination();
             Type destinationType = destination.GetType();
 
-            foreach (var sourceProperty in sourceType.GetProperties())
+            foreach (PropertyInfo sourceProperty in sourceType.GetProperties())
             {
                 string propertyName = sourceProperty.Name;
                 object propertyValue = sourceProperty.GetValue(mappedObject);
-
                 PropertyInfo propertyInfo = destinationType.GetProperty(propertyName);
-                propertyInfo?.SetValue(destination, propertyValue);
+
+                if (propertyInfo?.PropertyType.FullName != null &&
+                    (bool) propertyInfo?.PropertyType.FullName.Contains("System.Collections.Generic.List"))
+                {
+                    Type propertyType = propertyInfo.ReflectedType;
+                    if (propertyType is null) continue;
+                    foreach (PropertyInfo innerProperty in propertyType.GetProperties())
+                    {
+                        string innerPropertyName = innerProperty.Name;
+                        object innerPropertyValue = sourceProperty.GetValue(mappedObject);
+                    }
+                }
+                else
+                    propertyInfo?.SetValue(destination, propertyValue);
             }
 
             return destination;
