@@ -9,7 +9,7 @@ namespace MapperConsole.DTOs
         public string Surname { get; set; }
         public override string ToString()
         {
-            return $"{Name} {Surname} has Id: {Id}.";
+            return $"Id: {Id}\nName: {Name}\nSurname: {Surname}.";
         }
     }
 }

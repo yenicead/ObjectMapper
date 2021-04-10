@@ -22,6 +22,7 @@ namespace MapperConsole
             var personMapper = new MapperType<Person, PersonDTO>();
             PersonDTO personDto = personMapper.Map(person);
             Console.WriteLine(personDto.ToString());
+            Console.WriteLine();
 
             // Basic Test 2
             Employee employee = new Employee

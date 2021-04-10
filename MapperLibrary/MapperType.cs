@@ -1,45 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using MapperLibrary.Interfaces;
 
 namespace MapperLibrary
 {
     public class MapperType<TSource, TDestination> : IMapperType<TSource, TDestination>
-        where TDestination : new()
+        where TSource: class
+        where TDestination : class, new()
     {
-        public TDestination Map(TSource mappedObject)
+        public TDestination Map(TSource T)
         {
-            Type sourceType = typeof(TSource);
-            // Dictionary<string, Type> sourceProperties = sourceType.GetProperties().ToDictionary(x => x.Name, y => y.PropertyType);
-
-            TDestination destination = new TDestination();
-            Type destinationType = destination.GetType();
-
-            foreach (PropertyInfo sourceProperty in sourceType.GetProperties())
+            try
             {
-                string propertyName = sourceProperty.Name;
-                object propertyValue = sourceProperty.GetValue(mappedObject);
-                PropertyInfo propertyInfo = destinationType.GetProperty(propertyName);
+                TDestination destination = new TDestination();
+                IDictionary<string, PropertyInfo> sourceProperties = new MapperHelper<TSource>().GetProperties(T);
+                IDictionary<string, PropertyInfo> destinationProperties = new MapperHelper<TDestination>().GetProperties(destination);
 
-                if (propertyInfo?.PropertyType.FullName != null &&
-                    (bool) propertyInfo?.PropertyType.FullName.Contains("System.Collections.Generic.List"))
-                {
-                    Type propertyType = propertyInfo.ReflectedType;
-                    if (propertyType is null) continue;
-                    foreach (PropertyInfo innerProperty in propertyType.GetProperties())
-                    {
-                        string innerPropertyName = innerProperty.Name;
-                        object innerPropertyValue = sourceProperty.GetValue(mappedObject);
-                    }
-                }
-                else
-                    propertyInfo?.SetValue(destination, propertyValue);
+                BindProperties(sourceProperties, destinationProperties, T, destination);
+
+                return destination;
             }
+            catch (Exception exception)
+            {
+                throw new Exception($"An exception has occurred, details: { exception }");
+            }
+        }
 
-            return destination;
+        private static void BindProperties(
+            IDictionary<string, PropertyInfo> sourceProperties,
+            IDictionary<string, PropertyInfo> destinationProperties,
+            TSource sourceObject,
+            TDestination destinationObject)
+        {
+            foreach (var sourceProperty in sourceProperties)
+            {
+                string sourcePropertyName = sourceProperty.Key;
+                object sourcePropertyValue = sourceProperty.Value.GetValue(sourceObject);
+
+                // TODO: What if destination property is another class? Find a solution for this case.
+                if (destinationProperties.ContainsKey(sourcePropertyName) && 
+                    destinationProperties[sourcePropertyName].PropertyType == sourceProperty.Value.PropertyType)
+                {
+                    PropertyInfo destinationPropertyValue = destinationProperties[sourcePropertyName];
+                    destinationPropertyValue.SetValue(destinationObject, sourcePropertyValue);
+                }
+            }
         }
     }
 }

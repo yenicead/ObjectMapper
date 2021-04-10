@@ -20,7 +20,7 @@ namespace MapperConsole.DTOs
 
         public override string ToString()
         {
-            return $"{Name} {Surname} has Id: {Id}, and has {Addresses.Count} address(es).";
+            return $"Id: {Id}\nName: {Name}\nSurname: {Surname}\nAddress: {Addresses.Count}";
         }
     }
 }
