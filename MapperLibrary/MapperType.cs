@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using MapperLibrary.Interfaces;
 
@@ -9,15 +10,24 @@ namespace MapperLibrary
         where TSource: class
         where TDestination : class, new()
     {
-        public TDestination Map(TSource T)
+        private readonly IMapperHelper<TSource> _sourceMapperHelper;
+        private readonly IMapperHelper<TDestination> _destinationMapperHelper;
+
+        public MapperType(IMapperHelper<TSource> sourceMapperHelper, IMapperHelper<TDestination> destinationMapperHelper)
+        {
+            _sourceMapperHelper = sourceMapperHelper ?? throw new ArgumentNullException($"{sourceMapperHelper}");
+            _destinationMapperHelper = destinationMapperHelper ?? throw new ArgumentNullException($"{destinationMapperHelper}");
+        }
+
+        public TDestination Map(TSource TSource)
         {
             try
             {
                 TDestination destination = new TDestination();
-                IDictionary<string, PropertyInfo> sourceProperties = new MapperHelper<TSource>().GetProperties(T);
-                IDictionary<string, PropertyInfo> destinationProperties = new MapperHelper<TDestination>().GetProperties(destination);
+                IDictionary<string, PropertyInfo> sourceProperties = _sourceMapperHelper.GetProperties(TSource);
+                IDictionary<string, PropertyInfo> destinationProperties = _destinationMapperHelper.GetProperties(destination);
 
-                BindProperties(sourceProperties, destinationProperties, T, destination);
+                BindProperties(sourceProperties, destinationProperties, TSource, destination);
 
                 return destination;
             }

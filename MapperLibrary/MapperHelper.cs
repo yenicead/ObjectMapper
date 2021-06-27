@@ -15,8 +15,8 @@ namespace MapperLibrary
                 throw new ArgumentNullException($"Parameter {(T) null} is null.");
 
             var result = T.GetType()
-                                                    .GetProperties()
-                                                    .ToDictionary(key => key.Name, value => value);
+                            .GetProperties()
+                            .ToDictionary(key => key.Name, value => value);
 
             return result;
         }
