@@ -58,11 +58,16 @@ namespace MapperConsole
             MapperContainer.Assign<Employee, EmployeeDTO>();
             MapperContainer.Assign<Person, PersonDTO>();
 
-            IMapperHelper<Employee> sourceMapperHelper = new MapperHelper<Employee>();
-            IMapperHelper<EmployeeDTO> destinationMapperHelper = new MapperHelper<EmployeeDTO>();
-            var employeeMapper = new MapperType<Employee, EmployeeDTO>(sourceMapperHelper, destinationMapperHelper);
-            EmployeeDTO employeeDto = employeeMapper.Map(employee);
-            Console.WriteLine(employeeDto.ToString());
+            // EmployeeDTO employeeDto = employeeMapper.Map(employee);
+            var mapper = new Mapper();
+            var result = mapper.Map(employee);
+
+
+            //IMapperHelper<Employee> sourceMapperHelper = new MapperHelper<Employee>();
+            //IMapperHelper<EmployeeDTO> destinationMapperHelper = new MapperHelper<EmployeeDTO>();
+            //var employeeMapper = new MapperType<Employee, EmployeeDTO>(sourceMapperHelper, destinationMapperHelper);
+            //EmployeeDTO employeeDto = employeeMapper.Map(employee);
+            //Console.WriteLine(employeeDto.ToString());
         }
     }
 }
