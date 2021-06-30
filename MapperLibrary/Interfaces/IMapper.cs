@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Reflection;
 
 namespace MapperLibrary.Interfaces
 {
     public interface IMapper
     {
         object Map(object source);
+        IDictionary<string, PropertyInfo> GetProperties(object T);
     }
 }

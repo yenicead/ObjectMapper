@@ -12,18 +12,14 @@ namespace MapperConsole
         static void Main(string[] args)
         {
             // Basic Test 1
-            //Person person = new Person
-            //{
-            //    Id = Guid.NewGuid(),
-            //    Name = "Name",
-            //    Surname = "Surname",
-            //    BirthDate = DateTime.Now,
-            //    IdentityNumber = 12345678901
-            //};
-            //var personMapper = new MapperType<Person, PersonDTO>();
-            //PersonDTO personDto = personMapper.Map(person);
-            //Console.WriteLine(personDto.ToString());
-            //Console.WriteLine();
+            Person person = new Person
+            {
+                Id = Guid.NewGuid(),
+                Name = "Name",
+                Surname = "Surname",
+                BirthDate = DateTime.Now,
+                IdentityNumber = 12345678901
+            };
 
             // Basic Test 2
             Employee employee = new Employee
@@ -56,18 +52,13 @@ namespace MapperConsole
             };
 
             MapperContainer.Assign<Employee, EmployeeDTO>();
-            MapperContainer.Assign<Person, PersonDTO>();
+            // MapperContainer.Assign<Person, PersonDTO>();
 
-            // EmployeeDTO employeeDto = employeeMapper.Map(employee);
+            // 1. In the startup.cs file, register IMapper interface as Mapper class.
+            // 2. Then using DI, use IMapper anywhere in the constructor.
             var mapper = new Mapper();
-            var result = mapper.Map(employee);
-
-
-            //IMapperHelper<Employee> sourceMapperHelper = new MapperHelper<Employee>();
-            //IMapperHelper<EmployeeDTO> destinationMapperHelper = new MapperHelper<EmployeeDTO>();
-            //var employeeMapper = new MapperType<Employee, EmployeeDTO>(sourceMapperHelper, destinationMapperHelper);
-            //EmployeeDTO employeeDto = employeeMapper.Map(employee);
-            //Console.WriteLine(employeeDto.ToString());
+            var employeeDto = mapper.Map(employee);
+            var personDto = mapper.Map(person);
         }
     }
 }
