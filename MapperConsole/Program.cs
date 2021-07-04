@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MapperConsole.DTOs;
 using MapperConsole.Entities;
 using MapperLibrary;
+using MapperLibrary.Interfaces;
 
 namespace MapperConsole
 {
@@ -50,15 +51,27 @@ namespace MapperConsole
                 }
             };
 
+            // Basic Test 3
+            Address address = new Address
+            {
+                Country = "TR",
+                Description = "Some directions",
+                AddressType = AddressType.Home,
+                District = "Beylikduzu",
+                Province = "Istanbul"
+            };
+
             MapperContainer.Assign<Employee, EmployeeDTO>();
             MapperContainer.Assign<Person, PersonDTO>();
+            MapperContainer.Assign<Address, AddressDTO>();
 
             // 1. In the startup.cs file, register IMapper interface as Mapper class.
-            // 2. Then using DI, use IMapper anywhere in the constructor.
-            var mapper = new Mapper();
-            var employeeDto = mapper.Map(employee);
-            object personObject = mapper.Map(person);
-            PersonDTO personDto = mapper.Map<PersonDTO>(person);
+            // 2. Then using DI, use IMapper interface in any service class.
+            IMapper mapper = new Mapper();
+            //object employeeObject = mapper.Map(employee);
+            //object personObject = mapper.Map(person);
+            //PersonDTO personDto = mapper.Map<PersonDTO>(person);
+            AddressDTO addressDto = mapper.Map<AddressDTO>(address);
         }
     }
 }

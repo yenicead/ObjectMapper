@@ -10,7 +10,7 @@ namespace MapperLibrary
     {
         public object Map(object source)
         {
-            TypeTuples typeTuple = GetTypeTuple(source);
+            TypeTuple typeTuple = GetTypeTuple(source);
 
             object destinationInstance = Activator.CreateInstance(typeTuple.DestinationType);
 
@@ -43,12 +43,12 @@ namespace MapperLibrary
                         .ToDictionary(key => key.Name, value => value);
         }
 
-        private static TypeTuples GetTypeTuple(object source)
+        private static TypeTuple GetTypeTuple(object source)
         {
             if (source is null)
                 throw new ArgumentNullException(nameof(source));
 
-            TypeTuples typeTuple = MapperContainer.GetMapper()
+            TypeTuple typeTuple = MapperContainer.GetMapper()
                                .Where(m => m.SourceType == source.GetType())
                                .FirstOrDefault();
 

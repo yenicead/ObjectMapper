@@ -2,7 +2,7 @@ using MapperConsole.Entities;
 
 namespace MapperTest.MoqDataGenerator
 {
-    public static class EntityGenerator
+    public static class GenerateEntity
     {
         public static Address NewAddress()
         {

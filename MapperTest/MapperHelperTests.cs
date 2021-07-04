@@ -1,8 +1,8 @@
 ﻿using System;
-using MapperConsole.Entities;
+using System.Collections.Generic;
+using System.Reflection;
+using MapperConsole.DTOs;
 using MapperLibrary;
-using MapperLibrary.Interfaces;
-using MapperTest.MoqDataGenerator;
 using Xunit;
 
 namespace MapperTest
@@ -10,37 +10,31 @@ namespace MapperTest
     public class MapperHelperTests
     {
         [Fact]
-        public void GetProperties_ShouldThrowArgumentNullException()
+        public void BindProperties_ShouldThrowArgumentNullException_For_SourceProperties_Parameter()
         {
-            IMapperHelper<Employee> employeeMapperHelper = new MapperHelper<Employee>();
-            Assert.Throws<ArgumentNullException>(() => employeeMapperHelper.GetProperties(null));
+            Assert.Throws<ArgumentNullException>(() => MapperHelper.BindProperties(null, null, null, null));
         }
 
         [Fact]
-        public void GetProperties_ShouldReturnAddressProperties()
+        public void BindProperties_ShouldThrowArgumentNullException_For_DestinationProperties_Parameter()
         {
-            Address address = EntityGenerator.NewAddress();
-            IMapperHelper<Address> addressMapperHelper = new MapperHelper<Address>();
-            var properties = addressMapperHelper.GetProperties(address);
-            Assert.Equal(address.GetType().GetProperties().Length, properties.Count);
+            IDictionary<string, PropertyInfo> sourceProperties = new Dictionary<string, PropertyInfo>();
+            Assert.Throws<ArgumentNullException>(() => MapperHelper.BindProperties(sourceProperties, null, null, null));
         }
 
         [Fact]
-        public void GetProperties_ShouldReturnEmployeeProperties()
+        public void BindProperties_ShouldThrowArgumentNullException_For_Source_Parameter()
         {
-            Employee employee = EntityGenerator.NewEmployee();
-            IMapperHelper<Employee> employeeMapperHelper = new MapperHelper<Employee>();
-            var properties = employeeMapperHelper.GetProperties(employee);
-            Assert.Equal(employee.GetType().GetProperties().Length, properties.Count);
+            IDictionary<string, PropertyInfo> properties = new Dictionary<string, PropertyInfo>();
+            Assert.Throws<ArgumentNullException>(() => MapperHelper.BindProperties(properties, properties, null, null));
         }
 
         [Fact]
-        public void GetProperties_ShouldReturnPersonProperties()
+        public void BindProperties_ShouldThrowArgumentNullException_For_Destination_Parameter()
         {
-            Person person = EntityGenerator.NewPerson();
-            IMapperHelper<Person> personMapperHelper = new MapperHelper<Person>();
-            var properties = personMapperHelper.GetProperties(person);
-            Assert.Equal(person.GetType().GetProperties().Length, properties.Count);
+            IDictionary<string, PropertyInfo> properties = new Dictionary<string, PropertyInfo>();
+            object source = new object();
+            Assert.Throws<ArgumentNullException>(() => MapperHelper.BindProperties(properties, properties, source, null));
         }
     }
 }
