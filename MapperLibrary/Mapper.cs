@@ -10,25 +10,31 @@ namespace MapperLibrary
     {
         public object Map(object source)
         {
-            TypeTuples typeTuples = MapperContainer.GetMapper()
-                                           .Where(m => m.SourceType == source.GetType())
-                                           .FirstOrDefault();
+            TypeTuples typeTuple = GetTypeTuple(source);
 
-            if (typeTuples == null)
-                throw new ArgumentException($"Mapper is not found for { source.GetType() } type." +
-                    $"\nPlease add this type to MapperContainer and try again.");
-
-            object destinationInstance = Activator.CreateInstance(typeTuples.DestinationType);
+            object destinationInstance = Activator.CreateInstance(typeTuple.DestinationType);
 
             IDictionary<string, PropertyInfo> sourceProperties = GetProperties(source);
             IDictionary<string, PropertyInfo> destinationProperties = GetProperties(destinationInstance);
 
-            BindProperties(sourceProperties, destinationProperties, source, destinationInstance);
+            MapperHelper.BindProperties(sourceProperties, destinationProperties, source, destinationInstance);
 
             return destinationInstance;
         }
 
-        public IDictionary<string, PropertyInfo> GetProperties(object T)
+        public T Map<T>(object source)
+        {
+            T destinationInstance = Activator.CreateInstance<T>();
+
+            IDictionary<string, PropertyInfo> sourceProperties = GetProperties(source);
+            IDictionary<string, PropertyInfo> destinationProperties = GetProperties(destinationInstance);
+
+            MapperHelper.BindProperties(sourceProperties, destinationProperties, source, destinationInstance);
+
+            return destinationInstance;
+        }
+
+        private static IDictionary<string, PropertyInfo> GetProperties(object T)
         {
             if (T is null)
                 throw new ArgumentNullException($"Parameter {T} is null.");
@@ -37,26 +43,20 @@ namespace MapperLibrary
                         .ToDictionary(key => key.Name, value => value);
         }
 
-        // This method may be belong to different helper class.
-        private static void BindProperties(
-            IDictionary<string, PropertyInfo> sourceProperties,
-            IDictionary<string, PropertyInfo> destinationProperties,
-            object source,
-            object destination)
+        private static TypeTuples GetTypeTuple(object source)
         {
-            foreach (var sourceProperty in sourceProperties)
-            {
-                string sourcePropertyName = sourceProperty.Key;
-                object sourcePropertyValue = sourceProperty.Value.GetValue(source);
+            if (source is null)
+                throw new ArgumentNullException(nameof(source));
 
-                // TODO: What if destination property is another class? Find a solution for this case.
-                if (destinationProperties.ContainsKey(sourcePropertyName) &&
-                    destinationProperties[sourcePropertyName].PropertyType == sourceProperty.Value.PropertyType)
-                {
-                    PropertyInfo destinationPropertyValue = destinationProperties[sourcePropertyName];
-                    destinationPropertyValue.SetValue(destination, sourcePropertyValue);
-                }
-            }
+            TypeTuples typeTuple = MapperContainer.GetMapper()
+                               .Where(m => m.SourceType == source.GetType())
+                               .FirstOrDefault();
+
+            if (typeTuple == null)
+                throw new ArgumentException($"Mapper is not found for { source.GetType() } type." +
+                    $"\nPlease add this type to MapperContainer and try again.");
+
+            return typeTuple;
         }
     }
 }

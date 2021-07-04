@@ -1,24 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using MapperLibrary.Interfaces;
 
 namespace MapperLibrary
 {
-    public class MapperHelper<T> : IMapperHelper<T>
-        where T : class
+    public class MapperHelper
     {
-        public IDictionary<string, PropertyInfo> GetProperties(T T)
+        public static void BindProperties(
+            IDictionary<string, PropertyInfo> sourceProperties, 
+            IDictionary<string, PropertyInfo> destinationProperties, 
+            object source, 
+            object destination)
         {
-            if (T is null)
-                throw new ArgumentNullException($"Parameter {(T) null} is null.");
+            if (sourceProperties is null)
+                throw new ArgumentNullException(nameof(sourceProperties));
 
-            var result = T.GetType()
-                            .GetProperties()
-                            .ToDictionary(key => key.Name, value => value);
+            if (destinationProperties is null)
+                throw new ArgumentNullException(nameof(destinationProperties));
 
-            return result;
+            if (source is null)
+                throw new ArgumentNullException(nameof(source));
+
+            if (destination is null)
+                throw new ArgumentNullException(nameof(destination));
+
+            foreach (KeyValuePair<string, PropertyInfo> sourceProperty in sourceProperties)
+            {
+                string sourcePropertyName = sourceProperty.Key;
+                object sourcePropertyValue = sourceProperty.Value.GetValue(source);
+
+                if (destinationProperties.ContainsKey(sourcePropertyName) &&
+                    destinationProperties[sourcePropertyName].PropertyType == sourceProperty.Value.PropertyType)
+                {
+                    PropertyInfo destinationPropertyValue = destinationProperties[sourcePropertyName];
+                    destinationPropertyValue.SetValue(destination, sourcePropertyValue);
+                }
+            }
         }
     }
 }

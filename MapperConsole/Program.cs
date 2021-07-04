@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using MapperConsole.DTOs;
 using MapperConsole.Entities;
 using MapperLibrary;
-using MapperLibrary.Interfaces;
 
 namespace MapperConsole
 {
@@ -52,13 +51,14 @@ namespace MapperConsole
             };
 
             MapperContainer.Assign<Employee, EmployeeDTO>();
-            // MapperContainer.Assign<Person, PersonDTO>();
+            MapperContainer.Assign<Person, PersonDTO>();
 
             // 1. In the startup.cs file, register IMapper interface as Mapper class.
             // 2. Then using DI, use IMapper anywhere in the constructor.
             var mapper = new Mapper();
             var employeeDto = mapper.Map(employee);
-            var personDto = mapper.Map(person);
+            object personObject = mapper.Map(person);
+            PersonDTO personDto = mapper.Map<PersonDTO>(person);
         }
     }
 }

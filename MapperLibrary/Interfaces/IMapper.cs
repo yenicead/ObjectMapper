@@ -5,7 +5,19 @@ namespace MapperLibrary.Interfaces
 {
     public interface IMapper
     {
+        /// <summary>
+        /// Returns a new object.
+        /// </summary>
+        /// <param name="source">Source object which will be mapped.</param>
+        /// <returns></returns>
         object Map(object source);
-        IDictionary<string, PropertyInfo> GetProperties(object T);
+
+        /// <summary>
+        /// Returns a new object with type T.
+        /// </summary>
+        /// <typeparam name="T">Type of new object.</typeparam>
+        /// <param name="source">Source object which will be mapped to new object with type T. </param>
+        /// <returns></returns>
+        T Map<T>(object source);
     }
 }
