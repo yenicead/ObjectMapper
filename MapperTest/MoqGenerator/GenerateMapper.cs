@@ -10,7 +10,7 @@ namespace MapperTest.MoqGenerator
 {
     public class GenerateMapper
     {
-        public IMapper GetNewMapperHelper()
+        public static IMapper GetNewMapperHelper()
         {
             return new Mapper();
         }

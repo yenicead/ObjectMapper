@@ -1,8 +1,8 @@
 using MapperConsole.Entities;
 
-namespace MapperTest.MoqDataGenerator
+namespace MapperTest.MoqGenerator
 {
-    public static class GenerateEntity
+    public class GenerateEntity
     {
         public static Address NewAddress()
         {

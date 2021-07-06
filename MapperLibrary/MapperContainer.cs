@@ -12,26 +12,21 @@ namespace MapperLibrary
             where TSource: class
             where TDestination: class
         {
-            TypeTuple isTypeExist = typeTupleList.Where(x => x.SourceType == typeof(TSource) && x.DestinationType == typeof(TDestination)).FirstOrDefault();
-            
-            if (isTypeExist != null)
-                throw new Exception($"{ typeof(TSource) } and { typeof(TDestination) } exists in the MapperContainer.");
+            if (typeof(TSource) == typeof(TDestination))
+                throw new Exception($"Source type: { typeof(TSource) } and destination type { typeof(TDestination) } cannot be same type.");
 
-            TypeTuple typeTuple = new TypeTuple
-            {
-                SourceType = typeof(TSource),
-                DestinationType = typeof(TDestination)
-            };
+            if (typeTupleList.Any(x => x.SourceType == typeof(TSource) && x.DestinationType == typeof(TDestination)))
+                throw new Exception($"Source type: { typeof(TSource) } and destination type: { typeof(TDestination) } are already exist in the MapperContainer.");
 
-            AddMapperToList(typeTuple);
+            AddMapperToList(new TypeTuple { SourceType = typeof(TSource), DestinationType = typeof(TDestination) });
         }
 
-        public static void AddMapperToList(TypeTuple mapper)
+        private static void AddMapperToList(TypeTuple mapper)
         {
             typeTupleList.Add(mapper);
         }
 
-        public static IList<TypeTuple> GetMapper()
+        public static IList<TypeTuple> GetMapperList()
         {
             return typeTupleList;
         }

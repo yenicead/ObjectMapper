@@ -2,7 +2,7 @@
 
 namespace MapperTest.MoqGenerator
 {
-    public static class GenerateDto
+    public class GenerateDto
     {
         public static AddressDTO NewAddress()
         {

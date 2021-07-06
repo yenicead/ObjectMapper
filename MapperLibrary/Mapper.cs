@@ -48,13 +48,12 @@ namespace MapperLibrary
             if (source is null)
                 throw new ArgumentNullException(nameof(source));
 
-            TypeTuple typeTuple = MapperContainer.GetMapper()
+            TypeTuple typeTuple = MapperContainer.GetMapperList()
                                .Where(m => m.SourceType == source.GetType())
                                .FirstOrDefault();
 
             if (typeTuple == null)
-                throw new ArgumentException($"Mapper is not found for { source.GetType() } type." +
-                    $"\nPlease add this type to MapperContainer and try again.");
+                throw new Exception($"Mapper is not found for { source.GetType() } type.");
 
             return typeTuple;
         }

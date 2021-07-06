@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapperConsole", "MapperCons
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapperLibrary", "MapperLibrary\MapperLibrary.csproj", "{1C7C7E1F-4F56-4A46-A959-53B44DF110CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapperTest", "MapperTest\MapperTest.csproj", "{88040920-0E00-4036-B87C-A7EC45BA8877}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapperTest", "MapperTest\MapperTest.csproj", "{88040920-0E00-4036-B87C-A7EC45BA8877}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1C592591-DA1E-4434-B54F-D4659121AABA}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
