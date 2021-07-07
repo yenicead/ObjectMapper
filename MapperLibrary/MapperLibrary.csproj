@@ -2,6 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <PackageId>MapperLibrary.ObjectMapper</PackageId>
+    <Authors>Adem Yenice</Authors>
+    <Product>ObjectMapper</Product>
+    <Description>Library to map entity objects to dto objects.</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/yenicead/ObjectMapper</RepositoryUrl>
+    <PackageTags>Mapper, ObjectMapper</PackageTags>
+    <PackageReleaseNotes>This is the first release.</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
