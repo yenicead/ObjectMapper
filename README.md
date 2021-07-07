@@ -24,7 +24,7 @@ using MapperLibrary.Interfaces;
 
 Then in the ConfigureServices method assign your Entities to DTOs with MapperContainer:
 
-```code
+```csharp
 MapperContainer.Assign<Address, AddressDTO>();
 MapperContainer.Assign<Employee, EmployeeDTO>();
 MapperContainer.Assign<Person, PersonDTO>();
@@ -32,7 +32,7 @@ MapperContainer.Assign<Person, PersonDTO>();
 
 Finally, IMapper interface and Mapper class should be injected to IServiceCollection in the ConfigureServices method:
 
-```code
+```csharp
 services.AddScoped<IMapper, Mapper>();
 ```
 
