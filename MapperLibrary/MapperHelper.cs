@@ -41,13 +41,48 @@ namespace MapperLibrary
                     continue;
                 }
 
-                // If source property type is enum and destination property type is string, then convert and assign source property value to destination property.
-                if (destinationProperties[sourcePropertyName].PropertyType.FullName.Contains("String") && !sourceProperty.Value.PropertyType.IsClass)
+                // If source property type is enum and destination property type is primitive type (string, int, long etc), 
+                // then convert and assign source property value to destination property.
+                if (sourceProperty.Value.PropertyType.IsEnum)
                 {
-                    PropertyInfo destinationPropertyValue = destinationProperties[sourcePropertyName];
-                    destinationPropertyValue.SetValue(destination, sourcePropertyValue.ToString());
-                    continue;
+                    string destinationPropertyType = destinationProperties[sourcePropertyName].PropertyType.Name;
+                    switch (destinationPropertyType)
+                    {
+                        case "String":
+                            destinationProperties[sourcePropertyName].SetValue(destination, sourcePropertyValue.ToString());
+                            continue;
+
+                        case "Int16":
+                            destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToInt16(sourcePropertyValue));
+                            continue;
+
+                        case "Int32":
+                            destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToInt32(sourcePropertyValue));
+                            continue;
+
+                        case "UInt32":
+                            destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToUInt32(sourcePropertyValue));
+                            continue;
+
+                        case "Int64":
+                            destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToInt64(sourcePropertyValue));
+                            continue;
+
+                        case "UInt64":
+                            destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToUInt64(sourcePropertyValue));
+                            continue;
+
+                        case "Boolean":
+                            destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToBoolean(sourcePropertyValue));
+                            continue;
+
+                        default:
+                            break;
+                    }
                 }
+
+                // TODO: 1. If Source type is class and destination type is another class then find a solution.
+                // TODO: 2. If Source type is class and destination type is not class then find a solution.
             }
         }
     }

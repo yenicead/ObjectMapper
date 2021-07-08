@@ -56,7 +56,7 @@ namespace MapperConsole
             {
                 Country = "TR",
                 Description = "Some directions",
-                AddressType = AddressType.Home,
+                AddressType = AddressType.Office,
                 District = "Beylikduzu",
                 Province = "Istanbul"
             };
