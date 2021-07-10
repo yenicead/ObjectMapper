@@ -83,6 +83,7 @@ namespace MapperLibrary
 
                 // TODO: 1. If Source type is class and destination type is another class then find a solution.
                 // TODO: 2. If Source type is class and destination type is not class then find a solution.
+                // TODO: 3. If Source type is list and destination type is also list then test if it maps.
             }
         }
     }

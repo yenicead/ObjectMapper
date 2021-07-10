@@ -29,25 +29,13 @@ namespace MapperConsole
                 Surname = "Test Surname",
                 IdentityNumber = 10987654321,
                 BirthDate = new DateTime(1991, 01, 01),
-                Addresses = new List<Address>
+                Address = new Address
                 {
-                    new Address
-                    {
-                        Country = "TR",
-                        Description = "Office Address",
-                        Province = "Istanbul",
-                        District = "Maslak",
-                        AddressType = AddressType.Office
-                    },
-                    new Address
-                    {
-                        Country = "TR",
-                        Description = "Home Address",
-                        Province = "Istanbul",
-
-                        District = "Kagithane",
-                        AddressType = AddressType.Home
-                    }
+                    Country = "TR",
+                    Description = "Office Address",
+                    Province = "Istanbul",
+                    District = "Maslak",
+                    AddressType = AddressType.Office
                 }
             };
 
@@ -64,14 +52,22 @@ namespace MapperConsole
             MapperContainer.Assign<Employee, EmployeeDTO>();
             MapperContainer.Assign<Person, PersonDTO>();
             MapperContainer.Assign<Address, AddressDTO>();
+            //MapperContainer.Assign<List<Address>, List<AddressDTO>>();
+
+            //IList<Address> addressList = new List<Address>();
+            //addressList.Add(new Address { AddressType = AddressType.Home, Country = "ES", Description = "ES", District = "ES", Province = "ES" });
+            //addressList.Add(new Address { AddressType = AddressType.Home, Country = "TR", Description = "TR", District = "TR", Province = "TR" });
+            //addressList.Add(new Address { AddressType = AddressType.Home, Country = "UK", Description = "UK", District = "UK", Province = "UK" });
 
             // 1. In the startup.cs file, register IMapper interface as Mapper class.
             // 2. Then using DI, use IMapper interface in any service class.
             IMapper mapper = new Mapper();
-            //object employeeObject = mapper.Map(employee);
-            //object personObject = mapper.Map(person);
-            //PersonDTO personDto = mapper.Map<PersonDTO>(person);
-            AddressDTO addressDto = mapper.Map<AddressDTO>(address);
+            object employeeObject = mapper.Map(employee);
+            EmployeeDTO employeeDto = mapper.Map<EmployeeDTO>(employee);
+            // object personObject = mapper.Map(person);
+            // PersonDTO personDto = mapper.Map<PersonDTO>(person);
+            // AddressDTO addressDto = mapper.Map<AddressDTO>(address);
+            // var dto = mapper.Map(addressList);
         }
     }
 }

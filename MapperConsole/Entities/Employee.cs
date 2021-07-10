@@ -14,11 +14,6 @@ namespace MapperConsole.Entities
         public string Surname { get; set; }
         public long IdentityNumber { get; set; }
         public DateTime BirthDate { get; set; }
-        public List<Address> Addresses { get; set; }
-
-        public Employee()
-        {
-            Addresses = new List<Address>();
-        }
+        public Address Address { get; set; }
     }
 }
