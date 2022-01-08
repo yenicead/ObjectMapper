@@ -45,34 +45,34 @@ namespace MapperLibrary
                 // then convert and assign source property value to destination property.
                 if (sourceProperty.Value.PropertyType.IsEnum)
                 {
-                    string destinationPropertyType = destinationProperties[sourcePropertyName].PropertyType.Name;
+                    Type destinationPropertyType = destinationProperties[sourcePropertyName].PropertyType;
                     switch (destinationPropertyType)
                     {
-                        case "String":
+                        case Type when destinationPropertyType == typeof(string):
                             destinationProperties[sourcePropertyName].SetValue(destination, sourcePropertyValue.ToString());
                             continue;
 
-                        case "Int16":
+                        case Type when destinationPropertyType == typeof(short):
                             destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToInt16(sourcePropertyValue));
                             continue;
 
-                        case "Int32":
+                        case Type when destinationPropertyType == typeof(int):
                             destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToInt32(sourcePropertyValue));
                             continue;
 
-                        case "UInt32":
+                        case Type when destinationPropertyType == typeof(uint):
                             destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToUInt32(sourcePropertyValue));
                             continue;
 
-                        case "Int64":
+                        case Type when destinationPropertyType == typeof(long):
                             destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToInt64(sourcePropertyValue));
                             continue;
 
-                        case "UInt64":
+                        case Type when destinationPropertyType == typeof(ulong):
                             destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToUInt64(sourcePropertyValue));
                             continue;
 
-                        case "Boolean":
+                        case Type when destinationPropertyType == typeof(bool):
                             destinationProperties[sourcePropertyName].SetValue(destination, Convert.ToBoolean(sourcePropertyValue));
                             continue;
 
@@ -81,9 +81,9 @@ namespace MapperLibrary
                     }
                 }
 
-                // TODO: 1. If Source type is class and destination type is another class then find a solution.
-                // TODO: 2. If Source type is class and destination type is not class then find a solution.
-                // TODO: 3. If Source type is list and destination type is also list then test if it maps.
+                // TODO<Adem>: 1. If sourceProperty is class (Address) and destinationProperty is another class (AddressDto) then find a solution.
+                // TODO<Adem>: 2. If Source type is class and destination type is not class then find a solution.
+                // TODO<Adem>: 3. If Source type is list and destination type is also list then test if it maps.
             }
         }
     }

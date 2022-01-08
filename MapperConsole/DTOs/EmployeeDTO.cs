@@ -12,7 +12,7 @@ namespace MapperConsole.DTOs
         public string Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public Address Address { get; set; }
+        public AddressDTO Address { get; set; }
 
         public override string ToString()
         {

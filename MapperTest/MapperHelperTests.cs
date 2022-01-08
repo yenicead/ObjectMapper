@@ -10,27 +10,27 @@ namespace MapperTest
     public class MapperHelperTests
     {
         [Fact]
-        public void BindProperties_ShouldThrowArgumentNullException_For_SourceProperties_Parameter()
+        public void BindProperties_ShouldThrowArgumentNullException_ForSourcePropertiesParameter()
         {
             Assert.Throws<ArgumentNullException>(() => MapperHelper.BindProperties(null, null, null, null));
         }
 
         [Fact]
-        public void BindProperties_ShouldThrowArgumentNullException_For_DestinationProperties_Parameter()
+        public void BindProperties_ShouldThrowArgumentNullException_ForDestinationPropertiesParameter()
         {
             IDictionary<string, PropertyInfo> sourceProperties = new Dictionary<string, PropertyInfo>();
             Assert.Throws<ArgumentNullException>(() => MapperHelper.BindProperties(sourceProperties, null, null, null));
         }
 
         [Fact]
-        public void BindProperties_ShouldThrowArgumentNullException_For_Source_Parameter()
+        public void BindProperties_ShouldThrowArgumentNullException_ForSourceParameter()
         {
             IDictionary<string, PropertyInfo> properties = new Dictionary<string, PropertyInfo>();
             Assert.Throws<ArgumentNullException>(() => MapperHelper.BindProperties(properties, properties, null, null));
         }
 
         [Fact]
-        public void BindProperties_ShouldThrowArgumentNullException_For_Destination_Parameter()
+        public void BindProperties_ShouldThrowArgumentNullException_ForDestinationParameter()
         {
             IDictionary<string, PropertyInfo> properties = new Dictionary<string, PropertyInfo>();
             object source = new object();

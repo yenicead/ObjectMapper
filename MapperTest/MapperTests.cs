@@ -1,4 +1,6 @@
 ﻿using MapperConsole.DTOs;
+using MapperConsole.Entities;
+using MapperLibrary.Interfaces;
 using System;
 using Xunit;
 
@@ -7,24 +9,24 @@ namespace MapperTest
     public class MapperTests
     {
         [Fact]
-        public void Mapper_ShouldThrowException_When_MapperTypeNotExist()
+        public void Map_ShouldThrowException_WhenMapperTypeNotExist()
         {
-            var mapper = MoqGenerator.GenerateMapper.GetNewMapperHelper();
-            var personObject = MoqGenerator.GenerateEntity.NewPerson();
+            IMapper mapper = MoqGenerator.GenerateMapper.GetNewMapperHelper();
+            Person personObject = MoqGenerator.GenerateEntity.NewPerson();
             Assert.Throws<Exception>(() => mapper.Map(personObject));
         }
 
         [Fact]
-        public void Mapper_ShouldThrowException_When_SourceIsNull()
+        public void Map_ShouldThrowException_WhenSourceIsNull()
         {
-            var mapper = MoqGenerator.GenerateMapper.GetNewMapperHelper();
+            IMapper mapper = MoqGenerator.GenerateMapper.GetNewMapperHelper();
             Assert.Throws<ArgumentNullException>(() => mapper.Map(null));
         }
 
         [Fact]
-        public void Mapper_ShouldThrowException_When_SourceIsNull_WithDestinationType()
+        public void GenericMap_ShouldThrowException_WhenSourceIsNull()
         {
-            var mapper = MoqGenerator.GenerateMapper.GetNewMapperHelper();
+            IMapper mapper = MoqGenerator.GenerateMapper.GetNewMapperHelper();
             Assert.Throws<ArgumentNullException>(() => mapper.Map<AddressDTO>(null));
         }
     }
