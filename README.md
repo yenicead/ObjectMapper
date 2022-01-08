@@ -12,7 +12,7 @@ Solution consist of one console, one library and one test project.
 
 Package can be installed via Package Manager Console with the following command:
 
-`Install-Package MapperLibrary.ObjectMapper -Version 1.0.0`
+`Install-Package MapperLibrary.ObjectMapper -Version 1.0.2`
 
 ## Usage
 
